@@ -18,6 +18,14 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
+# 在 Windows 上将 stdout 重设为 UTF-8，避免 cp1252 无法编码中文
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 
 # Google 官方 Android Platform Tools 下载地址
 ADB_URLS = {
@@ -135,7 +143,7 @@ def main():
     platforms = args.platforms
 
     print("\n" + "=" * 60)
-    print("  ZHIKE-PhoneAgent - ADB 工具下载器")
+    print("  ZHIKE-PhoneAgent - ADB Tools Downloader")
     print("=" * 60)
     print(f"  目标平台: {', '.join(platforms)}")
     if args.force:
