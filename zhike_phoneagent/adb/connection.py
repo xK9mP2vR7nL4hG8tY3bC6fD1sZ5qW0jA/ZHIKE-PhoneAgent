@@ -1,6 +1,7 @@
 """ADB connection management for local USB and ADB TCP/IP devices."""
 
 import asyncio
+import os
 import subprocess
 import time
 from dataclasses import dataclass
@@ -69,8 +70,16 @@ class ADBConnection:
         Initialize ADB connection manager.
 
         Args:
-            adb_path: Path to ADB executable.
+            adb_path: Path to ADB executable. If a directory is supplied (e.g.
+                the ``platform-tools`` folder), it is resolved to the ``adb``
+                executable inside it, since the path is exec'd directly.
         """
+        # Resolve a directory argument to the adb executable it contains.
+        if adb_path and os.path.isdir(adb_path):
+            bin_name = "adb.exe" if os.name == "nt" else "adb"
+            candidate = os.path.join(adb_path, bin_name)
+            if os.path.isfile(candidate):
+                adb_path = candidate
         self.adb_path = adb_path
 
     def connect(self, address: str, timeout: int = 10) -> tuple[bool, str]:

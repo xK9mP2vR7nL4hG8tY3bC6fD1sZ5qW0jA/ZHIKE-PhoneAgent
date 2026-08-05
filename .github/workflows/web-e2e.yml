@@ -38,7 +38,9 @@ jobs:
         shell: bash
         run: |
           uv run python scripts/download_adb.py windows
-          echo "ADB_PATH=$(pwd)/resources/adb/windows/platform-tools" >> $GITHUB_ENV
+          # ZHIKE_ADB_PATH must point at the adb *executable*, not the
+          # platform-tools directory (the backend execs this path directly).
+          echo "ADB_PATH=$(pwd)/resources/adb/windows/platform-tools/adb.exe" >> $GITHUB_ENV
 
       - name: Run frontend E2E tests
         shell: bash
