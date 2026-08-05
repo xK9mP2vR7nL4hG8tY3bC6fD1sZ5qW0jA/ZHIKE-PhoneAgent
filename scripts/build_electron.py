@@ -364,7 +364,9 @@ class ElectronBuilder:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="ZHIKE-PhoneAgent Electron 一键构建脚本")
+    parser = argparse.ArgumentParser(
+        description="ZHIKE-PhoneAgent Electron 一键构建脚本"
+    )
     parser.add_argument("--skip-frontend", action="store_true", help="跳过前端构建")
     parser.add_argument("--skip-adb", action="store_true", help="跳过 ADB 工具下载")
     parser.add_argument("--skip-backend", action="store_true", help="跳过后端打包")

@@ -9,7 +9,11 @@ import time
 import pytest
 
 from zhike_phoneagent.config import AgentConfig, ModelConfig
-from zhike_phoneagent.phone_agent_manager import AgentMetadata, AgentState, PhoneAgentManager
+from zhike_phoneagent.phone_agent_manager import (
+    AgentMetadata,
+    AgentState,
+    PhoneAgentManager,
+)
 
 
 pytestmark = [pytest.mark.contract, pytest.mark.release_gate]

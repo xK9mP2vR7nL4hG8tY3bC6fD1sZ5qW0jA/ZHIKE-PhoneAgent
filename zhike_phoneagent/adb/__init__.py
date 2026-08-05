@@ -36,7 +36,11 @@ from zhike_phoneagent.adb.input import (
     type_text,
     type_text_async,
 )
-from zhike_phoneagent.adb.screenshot import Screenshot, get_screenshot, get_screenshot_async
+from zhike_phoneagent.adb.screenshot import (
+    Screenshot,
+    get_screenshot,
+    get_screenshot_async,
+)
 from zhike_phoneagent.adb.timing import TIMING_CONFIG, TimingConfig
 
 __all__ = [

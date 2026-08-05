@@ -128,9 +128,15 @@ def test_metrics_capture_trace_latency_histograms():
         output = generate_latest(registry).decode("utf-8")
 
         assert "zhike_phoneagent_trace_task_duration_seconds_bucket" in output
-        assert 'zhike_phoneagent_trace_task_duration_seconds_count{source="chat"} 1.0' in output
+        assert (
+            'zhike_phoneagent_trace_task_duration_seconds_count{source="chat"} 1.0'
+            in output
+        )
         assert "zhike_phoneagent_trace_step_duration_seconds_bucket" in output
-        assert 'zhike_phoneagent_trace_step_duration_seconds_count{source="chat"} 2.0' in output
+        assert (
+            'zhike_phoneagent_trace_step_duration_seconds_count{source="chat"} 2.0'
+            in output
+        )
         assert "zhike_phoneagent_trace_component_duration_seconds_bucket" in output
         assert 'component="llm"' in output
         assert 'component="sleep"' in output

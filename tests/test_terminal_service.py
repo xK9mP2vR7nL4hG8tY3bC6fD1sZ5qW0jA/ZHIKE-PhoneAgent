@@ -34,14 +34,18 @@ def test_build_terminal_environment_includes_project_tools(
     project_root = tmp_path / "project"
     project_root.mkdir()
 
-    venv_bin = project_root / ".venv" / ("Scripts" if sys.platform == "win32" else "bin")
+    venv_bin = (
+        project_root / ".venv" / ("Scripts" if sys.platform == "win32" else "bin")
+    )
     venv_bin.mkdir(parents=True)
 
     adb_bin = tmp_path / "platform-tools" / "adb"
     adb_bin.parent.mkdir(parents=True)
     adb_bin.write_text("", encoding="utf-8")
 
-    scrcpy_server = project_root / "zhike_phoneagent" / "resources" / "scrcpy-server-v3.3.3"
+    scrcpy_server = (
+        project_root / "zhike_phoneagent" / "resources" / "scrcpy-server-v3.3.3"
+    )
     scrcpy_server.parent.mkdir(parents=True)
     scrcpy_server.write_text("", encoding="utf-8")
 
@@ -103,7 +107,9 @@ def test_terminal_helpers_cover_frozen_python_env_and_path_dedup(
     monkeypatch.setenv("SCRCPY_SERVER_PATH", str(env_server))
     assert terminal_service._detect_scrcpy_server_path() == str(env_server)
 
-    env = {"path": f"{tmp_path / 'a'}{os.pathsep}{tmp_path / 'old'}{os.pathsep}{tmp_path / 'a'}"}
+    env = {
+        "path": f"{tmp_path / 'a'}{os.pathsep}{tmp_path / 'old'}{os.pathsep}{tmp_path / 'a'}"
+    }
     terminal_service._prepend_path_entries(
         env,
         [tmp_path / "a", tmp_path / "b", tmp_path / "a", Path("")],
@@ -447,7 +453,9 @@ async def test_terminal_windows_paths(monkeypatch: pytest.MonkeyPatch) -> None:
 
 
 @pytest.mark.anyio
-@pytest.mark.skipif(sys.platform == "win32", reason="pty/termios are not available on Windows")
+@pytest.mark.skipif(
+    sys.platform == "win32", reason="pty/termios are not available on Windows"
+)
 async def test_terminal_posix_start_read_wait_terminate_and_finalize(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -548,7 +556,9 @@ async def test_terminal_posix_start_read_wait_terminate_and_finalize(
 
 
 @pytest.mark.anyio
-@pytest.mark.skipif(sys.platform == "win32", reason="pty/termios are not available on Windows")
+@pytest.mark.skipif(
+    sys.platform == "win32", reason="pty/termios are not available on Windows"
+)
 async def test_start_posix_closes_pty_fds_when_spawn_fails(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

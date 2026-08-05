@@ -309,11 +309,14 @@ def test_layered_task_trace_observability_covers_debug_surface(
 
         metrics_output = generate_latest(get_metrics_registry()).decode("utf-8")
         assert "zhike_phoneagent_trace_task_duration_seconds_bucket" in metrics_output
-        assert 'zhike_phoneagent_trace_task_duration_seconds_count{source="layered"} 1.0' in (
-            metrics_output
+        assert (
+            'zhike_phoneagent_trace_task_duration_seconds_count{source="layered"} 1.0'
+            in (metrics_output)
         )
         assert "zhike_phoneagent_trace_step_duration_seconds_bucket" in metrics_output
-        assert "zhike_phoneagent_trace_component_duration_seconds_bucket" in metrics_output
+        assert (
+            "zhike_phoneagent_trace_component_duration_seconds_bucket" in metrics_output
+        )
     finally:
         reset_trace_latency_metrics()
         store.close()

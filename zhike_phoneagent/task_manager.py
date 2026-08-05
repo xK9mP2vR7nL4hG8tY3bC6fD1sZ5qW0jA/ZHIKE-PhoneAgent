@@ -471,7 +471,10 @@ class TaskManager:
             self._workers.pop(device_id, None)
 
     async def _execute_classic_chat(self, task: TaskRecord) -> None:
-        from zhike_phoneagent.exceptions import AgentInitializationError, DeviceBusyError
+        from zhike_phoneagent.exceptions import (
+            AgentInitializationError,
+            DeviceBusyError,
+        )
         from zhike_phoneagent.phone_agent_manager import PhoneAgentManager
 
         manager = PhoneAgentManager.get_instance()
@@ -836,7 +839,10 @@ class TaskManager:
         )
 
     async def _execute_scheduled_workflow(self, task: TaskRecord) -> None:
-        from zhike_phoneagent.exceptions import AgentInitializationError, DeviceBusyError
+        from zhike_phoneagent.exceptions import (
+            AgentInitializationError,
+            DeviceBusyError,
+        )
         from zhike_phoneagent.phone_agent_manager import PhoneAgentManager
 
         manager = PhoneAgentManager.get_instance()

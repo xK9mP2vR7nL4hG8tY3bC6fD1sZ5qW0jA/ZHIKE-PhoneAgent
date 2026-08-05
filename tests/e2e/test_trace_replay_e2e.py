@@ -153,9 +153,7 @@ class TestTraceReplayE2E:
         )
 
         step_records = [
-            record
-            for record in replay_records
-            if record["event_name"] == "zhike.step"
+            record for record in replay_records if record["event_name"] == "zhike.step"
         ]
         assert len(step_records) == final_task["step_count"]
         first_step = step_records[0]["step"]
@@ -220,8 +218,7 @@ class TestTraceReplayE2E:
         _wait_for_jsonl(
             replay_file,
             lambda records: any(
-                record.get("event_name") == "zhike.trace.summary"
-                for record in records
+                record.get("event_name") == "zhike.trace.summary" for record in records
             ),
         )
         assert replay_dir.exists()

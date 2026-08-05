@@ -17,7 +17,11 @@ import zhike_phoneagent.adb_manager as adb_manager
 import zhike_phoneagent.config_manager as config_manager_module
 import zhike_phoneagent.device_manager as device_manager_module
 from zhike_phoneagent.actions import ActionHandler
-from zhike_phoneagent.config_manager import ConfigModel, ConfigSource, UnifiedConfigManager
+from zhike_phoneagent.config_manager import (
+    ConfigModel,
+    ConfigSource,
+    UnifiedConfigManager,
+)
 from zhike_phoneagent.models.scheduled_task import ScheduledTask
 from zhike_phoneagent.scheduler_manager import SchedulerManager
 
@@ -552,7 +556,9 @@ def test_main_entry_success_error_and_browser_paths(
         main_module.main()
     assert exc.value.code == 7
 
-    monkeypatch.setattr(sys, "argv", ["zhike-phoneagent", "--port", "9999", "--no-browser"])
+    monkeypatch.setattr(
+        sys, "argv", ["zhike-phoneagent", "--port", "9999", "--no-browser"]
+    )
     monkeypatch.setattr(
         adb_manager, "ensure_adb", lambda: (_ for _ in ()).throw(RuntimeError("no adb"))
     )

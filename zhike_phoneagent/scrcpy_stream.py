@@ -163,7 +163,10 @@ class ScrcpyStreamer:
         meipass = getattr(sys, "_MEIPASS", None)
         if meipass:
             bundled_server = (
-                Path(meipass) / "zhike_phoneagent" / "resources" / "scrcpy-server-v3.3.3"
+                Path(meipass)
+                / "zhike_phoneagent"
+                / "resources"
+                / "scrcpy-server-v3.3.3"
             )
             if bundled_server.exists():
                 logger.info(f"Using bundled scrcpy-server: {bundled_server}")

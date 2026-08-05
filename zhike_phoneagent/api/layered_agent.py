@@ -11,7 +11,9 @@ from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from zhike_phoneagent.layered_agent_service import reset_session as reset_layered_session
+from zhike_phoneagent.layered_agent_service import (
+    reset_session as reset_layered_session,
+)
 from zhike_phoneagent.task_manager import task_manager
 from zhike_phoneagent.task_store import TERMINAL_TASK_STATUSES, task_store
 

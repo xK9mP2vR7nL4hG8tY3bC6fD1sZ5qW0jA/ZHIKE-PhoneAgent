@@ -102,7 +102,9 @@ def build_package() -> bool:
 
 def main() -> int:
     """Main build process."""
-    parser = argparse.ArgumentParser(description="Build ZHIKE-PhoneAgent for distribution")
+    parser = argparse.ArgumentParser(
+        description="Build ZHIKE-PhoneAgent for distribution"
+    )
     parser.add_argument(
         "--pack", action="store_true", help="Also build Python package after frontend"
     )

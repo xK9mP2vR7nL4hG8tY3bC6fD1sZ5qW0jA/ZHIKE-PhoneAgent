@@ -111,8 +111,7 @@ def docker_container(mock_agent_server: str, mock_llm_server: str):
 
     # Use Mock LLM URL instead of environment variables
     env = {
-        "ZHIKE_BASE_URL": llm_url
-        + "/v1",  # Must include /v1 for OpenAI compatibility
+        "ZHIKE_BASE_URL": llm_url + "/v1",  # Must include /v1 for OpenAI compatibility
         "ZHIKE_MODEL_NAME": "mock-glm-model",
         "ZHIKE_API_KEY": "mock-key",
         "ZHIKE_CORS_ORIGINS": "*",

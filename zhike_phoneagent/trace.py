@@ -21,7 +21,9 @@ from typing import Any, Iterator, Literal
 from zhike_phoneagent.logger import logger
 
 
-_TRACE_ID: ContextVar[str | None] = ContextVar("zhike_phoneagent_trace_id", default=None)
+_TRACE_ID: ContextVar[str | None] = ContextVar(
+    "zhike_phoneagent_trace_id", default=None
+)
 _SPAN_STACK: ContextVar[tuple[str, ...]] = ContextVar(
     "zhike_phoneagent_trace_span_stack", default=()
 )
