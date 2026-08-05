@@ -215,3 +215,20 @@ jobs:
           name: ${{ steps.artifacts-linux.outputs.targz_name }}
           path: ${{ steps.artifacts-linux.outputs.targz_path }}
           retention-days: ${{ inputs.artifact_retention_days }}
+
+      # Release 上传：将 electron/dist/ 中所有产物上传到 GitHub Release
+      - name: Upload to GitHub Release
+        if: inputs.publish_mode != 'never'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        shell: bash
+        run: |
+          if [ -d "electron/dist" ]; then
+            for f in electron/dist/*.exe electron/dist/*.dmg electron/dist/*.AppImage \
+                     electron/dist/*.tar.gz electron/dist/*.yml electron/dist/*.blockmap; do
+              if [ -f "$f" ]; then
+                echo "Uploading $(basename "$f") ..."
+                gh release upload "${GITHUB_REF#refs/tags/}" "$f" --clobber
+              fi
+            done
+          fi

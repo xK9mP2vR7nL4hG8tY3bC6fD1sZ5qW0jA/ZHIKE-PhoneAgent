@@ -5,11 +5,9 @@ copyright: Copyright © 2026 ZHIKE
 artifactName: ZHIKE-PhoneAgent-${version}-${arch}.${ext}
 
 # 发布到 GitHub Releases
-publish:
-  provider: github
-  owner: xK9mP2vR7nL4hG8tY3bC6fD1sZ5qW0jA
-  repo: ZHIKE-PhoneAgent
-  releaseType: release
+# 不使用 electron-builder 内置 publish（Windows 上大文件上传容易超时）。
+# 产物通过 `gh release upload` 在 Release 工作流中单独上传。
+publish: null
 
 # 启用更新元数据生成
 electronUpdaterCompatibility: ">=2.16"
