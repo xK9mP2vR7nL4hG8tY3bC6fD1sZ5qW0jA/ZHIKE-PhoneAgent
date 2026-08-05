@@ -218,12 +218,13 @@ jobs:
 
       # Release 上传：将 electron/dist/ 中所有产物上传到 GitHub Release
       - name: Upload to GitHub Release
-        if: inputs.publish_mode != 'never'
+        if: inputs.publish_mode == 'onTag'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         shell: bash
         run: |
           if [ -d "electron/dist" ]; then
+            ls -lh electron/dist/
             for f in electron/dist/*.exe electron/dist/*.dmg electron/dist/*.AppImage \
                      electron/dist/*.tar.gz electron/dist/*.yml electron/dist/*.blockmap; do
               if [ -f "$f" ]; then

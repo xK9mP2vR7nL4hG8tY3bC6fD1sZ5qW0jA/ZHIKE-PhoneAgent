@@ -43,6 +43,7 @@ win:
   signAndEditExecutable: false
 
 nsis:
+  artifactName: ZHIKE-PhoneAgent-Setup-${version}-${arch}.${ext}
   oneClick: false
   allowToChangeInstallationDirectory: true
   createDesktopShortcut: true
