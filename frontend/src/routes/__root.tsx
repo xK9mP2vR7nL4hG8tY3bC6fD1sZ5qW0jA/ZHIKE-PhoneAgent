@@ -33,9 +33,22 @@ export function Footer() {
     setLocale(locale === 'en' ? 'zh' : 'en');
   };
 
-  const handleUpdateClick = () => {
+  const handleUpdateClick = async () => {
+    // 桌面端：直接触发应用内自动更新（后台静默下载，下载完弹「立即重启」），
+    // 不再打开浏览器跳转到 GitHub releases 页。
+    const electronAPI = (window as Window & {
+      electronAPI?: {
+        updates?: {
+          checkAndDownload: () => Promise<{ success: boolean; error?: string }>;
+        };
+      };
+    }).electronAPI;
+    if (electronAPI?.updates?.checkAndDownload) {
+      await electronAPI.updates.checkAndDownload();
+      return;
+    }
+    // 非桌面端兜底：打开 releases 页
     if (updateInfo?.release_url) {
-      // Open release page in new tab
       window.open(updateInfo.release_url, '_blank', 'noopener,noreferrer');
     }
   };

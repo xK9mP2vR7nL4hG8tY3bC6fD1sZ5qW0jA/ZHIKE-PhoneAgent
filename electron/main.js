@@ -66,6 +66,26 @@ function writeMainLog(level, message, detail) {
 autoUpdater.autoDownload = true;  // 自动下载更新
 autoUpdater.autoInstallOnAppQuit = true;  // 退出时自动安装
 
+// ==================== 自动更新源配置 ====================
+// 重要：electron-builder 使用 publish: null（避免 Windows 大文件上传超时），
+// 因此打包产物里不会生成 app-update.yml。若不显式指定 feed，
+// checkForUpdatesAndNotify() 会因缺少更新源而静默失败（error handler 仅记录日志），
+// 自动更新通道完全不可用，只能退化到前端页脚徽章打开浏览器 releases 页。
+// 这里显式指定 GitHub provider，使便携版/安装版都能在应用内静默下载并提示重启。
+const UPDATE_REPO_OWNER = 'xK9mP2vR7nL4hG8tY3bC6fD1sZ5qW0jA';
+const UPDATE_REPO_NAME = 'ZHIKE-PhoneAgent';
+try {
+  autoUpdater.setFeedURL({
+    provider: 'github',
+    owner: UPDATE_REPO_OWNER,
+    repo: UPDATE_REPO_NAME,
+    private: false,
+  });
+  log.info(`[Updater] Feed configured: github:${UPDATE_REPO_OWNER}/${UPDATE_REPO_NAME}`);
+} catch (err) {
+  log.error('[Updater] Failed to configure feed:', err);
+}
+
 // ==================== DevTools 日志输出配置 ====================
 
 /**
@@ -157,6 +177,34 @@ autoUpdater.on('error', (err) => {
   log.error('[Updater] Error:', err);
   logToDevTools(`[Updater] Error: ${err.message}`, 'error');
   // 静默失败，不干扰用户
+});
+
+// ==================== 更新相关 IPC ====================
+// 供前端页脚「新版本」徽章调用：在应用内直接检查并下载更新，
+// 下载完成后由 update-downloaded 事件弹出「立即重启」对话框，
+// 全程不打开浏览器、不跳转 GitHub releases 页。
+ipcMain.handle('app:check-for-updates', async () => {
+  try {
+    if (!app.isPackaged) {
+      return { success: false, error: 'not packaged' };
+    }
+    await autoUpdater.checkForUpdatesAndNotify();
+    return { success: true };
+  } catch (err) {
+    const message = err && err.message ? err.message : String(err);
+    log.error('[Updater] Manual check failed:', message);
+    return { success: false, error: message };
+  }
+});
+
+ipcMain.handle('app:install-update', () => {
+  try {
+    autoUpdater.quitAndInstall(false, true);
+    return { success: true };
+  } catch (err) {
+    const message = err && err.message ? err.message : String(err);
+    return { success: false, error: message };
+  }
 });
 
 // ==================== 全局变量 ====================

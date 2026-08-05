@@ -228,11 +228,11 @@ jobs:
           mkdir -p update-dist
           gh release download "${GITHUB_REF#refs/tags/}" \
             --dir update-dist \
-            --pattern "ZHIKE-PhoneAgent-Setup-*.exe" \
+            --pattern "ZHIKE-PhoneAgent-*.exe" \
             --pattern "ZHIKE-PhoneAgent-*arm64.dmg" \
             --pattern "ZHIKE-PhoneAgent-*x64.dmg" \
             --pattern "ZHIKE-PhoneAgent-*.AppImage" \
-            --pattern "ZHIKE-PhoneAgent-Setup-*.exe.blockmap" \
+            --pattern "ZHIKE-PhoneAgent-*.exe.blockmap" \
             --pattern "ZHIKE-PhoneAgent-*arm64.dmg.blockmap" \
             --pattern "ZHIKE-PhoneAgent-*x64.dmg.blockmap"
 
