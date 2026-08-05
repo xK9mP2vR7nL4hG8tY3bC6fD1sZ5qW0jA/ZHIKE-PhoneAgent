@@ -3,6 +3,8 @@ __pycache__/
 *.py[oc]
 build/
 dist/
+_backfill/
+update-dist/
 wheels/
 *.egg-info
 .pytest_cache/

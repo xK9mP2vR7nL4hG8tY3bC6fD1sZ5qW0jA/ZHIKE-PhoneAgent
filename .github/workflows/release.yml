@@ -194,3 +194,64 @@ jobs:
       publish_mode: onTag
     secrets:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Centralized auto-update metadata generation.
+  # The Electron build runs with `publish: null` / `--publish never` (to avoid
+  # Windows large-binary upload timeouts), so electron-builder does NOT emit the
+  # `latest.yml` / `latest-mac.yml` / `latest-linux.yml` files that
+  # electron-updater's GitHub provider requires. We generate them here from the
+  # already-published installers (this also correctly combines both macOS arches,
+  # which are built in separate jobs) and upload them to the release.
+  generate-update-metadata:
+    name: Generate Auto-Update Metadata
+    runs-on: ubuntu-latest
+    needs:
+      - release
+      - build-electron-macos
+      - build-electron-macos-x64
+      - build-electron-windows
+      - build-electron-linux
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python & uv
+        uses: ./.github/actions/setup-python
+
+      - name: Download installers and blockmaps
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          mkdir -p update-dist
+          gh release download "${GITHUB_REF#refs/tags/}" \
+            --dir update-dist \
+            --pattern "ZHIKE-PhoneAgent-Setup-*.exe" \
+            --pattern "ZHIKE-PhoneAgent-*arm64.dmg" \
+            --pattern "ZHIKE-PhoneAgent-*x64.dmg" \
+            --pattern "ZHIKE-PhoneAgent-*.AppImage" \
+            --pattern "ZHIKE-PhoneAgent-Setup-*.exe.blockmap" \
+            --pattern "ZHIKE-PhoneAgent-*arm64.dmg.blockmap" \
+            --pattern "ZHIKE-PhoneAgent-*x64.dmg.blockmap"
+
+      - name: Generate update metadata (latest*.yml)
+        shell: bash
+        run: |
+          uv run python scripts/gen_update_metadata.py update-dist
+          echo "=== generated files ==="
+          ls -lh update-dist/latest*.yml
+          cat update-dist/latest.yml update-dist/latest-mac.yml update-dist/latest-linux.yml
+
+      - name: Upload update metadata to Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          for f in update-dist/latest.yml update-dist/latest-mac.yml update-dist/latest-linux.yml; do
+            if [ -f "$f" ]; then
+              echo "Uploading $(basename "$f") ..."
+              gh release upload "${GITHUB_REF#refs/tags/}" "$f" --clobber
+            fi
+          done
