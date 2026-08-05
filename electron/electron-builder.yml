@@ -1,0 +1,82 @@
+appId: com.zhike.phoneagent
+productName: ZHIKE-PhoneAgent
+copyright: Copyright © 2026 ZHIKE
+
+artifactName: ZHIKE-PhoneAgent-${version}-${arch}.${ext}
+
+# 发布到 GitHub Releases
+publish:
+  provider: github
+  owner: xK9mP2vR7nL4hG8tY3bC6fD1sZ5qW0jA
+  repo: ZHIKE-PhoneAgent
+  releaseType: release
+
+# 启用更新元数据生成
+electronUpdaterCompatibility: ">=2.16"
+
+# 打包后设置可执行权限
+afterPack: ./afterPack.js
+
+directories:
+  output: dist
+  buildResources: build
+
+files:
+  - "main.js"
+  - "preload.js"
+  - "afterPack.js"
+  - "package.json"
+  - "splash.html"
+  - "splash-logo.png"
+  # 不显式配置 node_modules，让 electron-builder 自动从 dependencies 中包含运行时依赖
+
+extraResources:
+  - from: ../resources/backend
+    to: backend
+  - from: ../resources/adb
+    to: adb
+
+win:
+  target:
+    - nsis       # 安装包（推荐）
+    - portable   # 便携版
+  icon: icon.ico
+
+nsis:
+  artifactName: ZHIKE-PhoneAgent-Setup-${version}-${arch}.${ext}
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: ZHIKE-PhoneAgent
+  uninstallDisplayName: ZHIKE-PhoneAgent
+  perMachine: false  # 用户级安装，无需管理员权限
+  installerIcon: build/installerIcon.ico
+  uninstallerIcon: build/uninstallerIcon.ico
+  installerHeader: build/installerHeader.bmp
+  installerSidebar: build/installerSidebar.bmp
+  uninstallerSidebar: build/uninstallerSidebar.bmp
+
+mac:
+  target:
+    - dmg
+  icon: icon.icns
+  category: public.app-category.developer-tools
+  # 开发阶段不签名，使用 xattr -cr 移除隔离属性
+  identity: null
+
+dmg:
+  # 启用 writeUpdateInfo 生成 latest-mac.yml（自动更新必需）
+  writeUpdateInfo: true
+  format: UDZO
+  sign: false
+  internetEnabled: false
+
+
+linux:
+  target:
+    - AppImage    # 最通用的格式，无需安装
+    - tar.gz      # 便携版
+    # deb 暂时移除：需要 ZHIKE 官方维护者邮箱后恢复
+  category: Development
+  icon: icon.png

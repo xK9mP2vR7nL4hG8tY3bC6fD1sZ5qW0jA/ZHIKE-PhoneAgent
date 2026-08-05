@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>ZHIKE-PhoneAgent</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(160deg, #101828 0%, #1d2939 60%, #42307d 100%);
+      color: #f2f4f7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+    .logo {
+      width: 128px;
+      height: 128px;
+      margin-bottom: 24px;
+      filter: drop-shadow(0 8px 24px rgba(122, 90, 248, 0.45));
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    .brand {
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: 6px;
+      background: linear-gradient(90deg, #84adff, #c084fc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .product {
+      margin-top: 8px;
+      font-size: 15px;
+      letter-spacing: 2px;
+      color: #cfd4dc;
+    }
+    .status {
+      margin-top: 40px;
+      font-size: 13px;
+      color: #98a2b3;
+      letter-spacing: 1px;
+    }
+    .bar {
+      margin-top: 14px;
+      width: 220px;
+      height: 3px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+    }
+    .bar::after {
+      content: "";
+      display: block;
+      width: 40%;
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #84adff, #c084fc);
+      animation: slide 1.4s ease-in-out infinite;
+    }
+    @keyframes slide {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(560%); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+  </style>
+</head>
+<body>
+  <img class="logo" src="splash-logo.png" alt="ZHIKE" />
+  <div class="brand">ZHIKE</div>
+  <div class="product">ZHIKE-PhoneAgent</div>
+  <div class="status">正在启动智能体服务……</div>
+  <div class="bar"></div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+[run]
+source = zhike_phoneagent
+parallel = True
+concurrency = multiprocessing,thread
+
+[report]
+show_missing = True
+skip_covered = False
+
+[html]
+directory = htmlcov
