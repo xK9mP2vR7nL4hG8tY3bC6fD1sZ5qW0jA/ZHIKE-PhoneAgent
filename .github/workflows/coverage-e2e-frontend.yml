@@ -34,8 +34,16 @@ jobs:
           cd frontend
           pnpm exec playwright install chromium
 
+      - name: Install ADB (runner has no adb)
+        shell: bash
+        run: |
+          uv run python scripts/download_adb.py linux
+          echo "ADB_PATH=$(pwd)/resources/adb/linux/platform-tools" >> $GITHUB_ENV
+
       - name: Run frontend E2E tests with backend coverage
         shell: bash
+        env:
+          ZHIKE_ADB_PATH: ${{ env.ADB_PATH }}
         run: |
           cd frontend
           COVERAGE_E2E_FRONTEND=1 pnpm test:e2e
