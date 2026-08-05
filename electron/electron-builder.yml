@@ -41,6 +41,9 @@ win:
     - nsis       # 安装包（推荐）
     - portable   # 便携版
   icon: icon.ico
+  # 显式禁用 Windows 代码签名：当前仓库无签名证书，签名会失败
+  signAndEditExecutable: false
+  signingHashAlgorithms: null
 
 nsis:
   oneClick: false
