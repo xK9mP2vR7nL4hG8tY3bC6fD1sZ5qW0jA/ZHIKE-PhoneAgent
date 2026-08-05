@@ -33,6 +33,12 @@ jobs:
           cd frontend
           pnpm exec playwright install chromium
 
+      - name: Install ADB (Windows runner has no adb)
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          uv run python scripts/download_adb.py windows
+
       - name: Run frontend E2E tests
         shell: bash
         run: |
