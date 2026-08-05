@@ -38,9 +38,12 @@ jobs:
         shell: bash
         run: |
           uv run python scripts/download_adb.py windows
+          echo "ADB_PATH=$(pwd)/resources/adb/windows/platform-tools" >> $GITHUB_ENV
 
       - name: Run frontend E2E tests
         shell: bash
+        env:
+          ZHIKE_ADB_PATH: ${{ env.ADB_PATH }}
         run: |
           cd frontend
           pnpm test:e2e
