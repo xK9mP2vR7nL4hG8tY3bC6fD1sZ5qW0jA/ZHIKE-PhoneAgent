@@ -634,6 +634,9 @@ function createSplash() {
     alwaysOnTop: true,
     skipTaskbar: true,
     title: 'ZHIKE-PhoneAgent',
+    // 显式设置窗口图标为 ZHIKE 品牌图标，避免回退到默认 Electron 图标
+    // Windows 下用 .ico（任务栏更清晰），其他平台用 .png
+    icon: path.join(__dirname, process.platform === 'win32' ? 'icon.ico' : 'icon.png'),
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false
@@ -673,6 +676,8 @@ function createWindow() {
     minWidth: 1200,
     minHeight: 700,
     title: 'ZHIKE-PhoneAgent',
+    // 显式设置主窗口图标为 ZHIKE 品牌图标，确保任务栏 / 标题栏 / Alt-Tab 显示正确
+    icon: path.join(__dirname, process.platform === 'win32' ? 'icon.ico' : 'icon.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
