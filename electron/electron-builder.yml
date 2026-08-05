@@ -51,11 +51,13 @@ nsis:
   shortcutName: ZHIKE-PhoneAgent
   uninstallDisplayName: ZHIKE-PhoneAgent
   perMachine: false  # 用户级安装，无需管理员权限
-  installerIcon: build/installerIcon.ico
-  uninstallerIcon: build/uninstallerIcon.ico
-  installerHeader: build/installerHeader.bmp
-  installerSidebar: build/installerSidebar.bmp
-  uninstallerSidebar: build/uninstallerSidebar.bmp
+  # NSIS 自定义资源（24-bit RGB BMP）默认关闭，使用 electron-builder 内置资源
+  # 启用方式：将下面四行取消注释并确保 electron/build/ 下有对应文件
+  # installerIcon: build/installerIcon.ico
+  # uninstallerIcon: build/uninstallerIcon.ico
+  # installerHeader: build/installerHeader.bmp
+  # installerSidebar: build/installerSidebar.bmp
+  # uninstallerSidebar: build/uninstallerSidebar.bmp
 
 mac:
   target:
