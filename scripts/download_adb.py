@@ -113,6 +113,8 @@ def download_adb(platform: str, force: bool = False) -> None:
     # Linux/macOS 上 ZIP 解压后不保留可执行权限，需手动 chmod
     if platform != "windows":
         platform_tools_dir = output_dir / "platform-tools"
+        # 目录也要有可执行权限（GitHub runner umask 可能去掉 +x）
+        platform_tools_dir.chmod(0o755)
         for binary in (
             "adb",
             "fastboot",
