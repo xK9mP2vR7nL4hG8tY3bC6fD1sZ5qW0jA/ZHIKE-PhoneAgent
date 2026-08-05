@@ -1,0 +1,12 @@
+"""ZHIKE-PhoneAgent Backend API Server (FastAPI + Socket.IO)."""
+
+from socketio import ASGIApp
+
+from zhike_phoneagent.api import app as fastapi_app
+from zhike_phoneagent.socketio_server import sio
+
+app = ASGIApp(
+    other_asgi_app=fastapi_app, socketio_server=sio, socketio_path="/socket.io"
+)
+
+__all__ = ["app"]

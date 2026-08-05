@@ -1,0 +1,36 @@
+ZHIKE-PhoneAgent
+Copyright 2026 ZHIKE
+
+This product includes software developed at
+The Apache Software Foundation (https://www.apache.org/).
+
+===============================================================================
+
+Upstream Attribution
+--------------------
+
+This project is a modified and rebranded derivative of AutoGLM-GUI,
+originally developed by suyiiyii and contributors, and licensed under the
+Apache License, Version 2.0.
+
+  - Upstream project: https://github.com/suyiiyii/AutoGLM-GUI
+  - Original copyright: Copyright 2025 suyiiyii
+
+The original license text is preserved in the LICENSE file.
+A summary of modifications is available in CHANGES_FROM_UPSTREAM.md.
+
+This project also builds upon the technology stack of the upstream
+open-source project Open-AutoGLM (https://github.com/zai-org/Open-AutoGLM),
+developed by the zai-org team.
+
+===============================================================================
+
+Third-Party Model Identifiers
+-----------------------------
+
+Identifiers such as "autoglm-phone", "AutoGLM-Phone-9B",
+"AutoGLM-Phone-9B-Multilingual", "ZhipuAI/AutoGLM-Phone-9B" and
+"zai-org/AutoGLM-Phone-9B" that appear in this software are third-party
+model service IDs owned by their respective providers. They are retained
+solely for interoperability with those services and are not trademarks or
+products of ZHIKE.

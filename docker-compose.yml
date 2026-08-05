@@ -1,0 +1,31 @@
+services:
+  zhike-phoneagent:
+    # 使用 GHCR 预构建镜像
+    image: ghcr.io/xk9mp2vr7nl4hg8ty3bc6fd1sz5qw0ja/zhike-phoneagent:main
+    container_name: zhike-phoneagent
+
+    # Linux: use host network for mDNS/USB support (推荐)
+    # macOS/Windows: use port mapping instead (comment out network_mode, uncomment ports)
+    network_mode: host
+
+    # Alternative: bridge network with port mapping
+    # ports:
+    #   - "8000:8000"
+
+    # 环境变量可选，也可以在 Web 界面中配置
+    # environment:
+    #   - ZHIKE_BASE_URL=https://open.bigmodel.cn/api/paas/v4
+    #   - ZHIKE_MODEL_NAME=autoglm-phone
+    #   - ZHIKE_API_KEY=sk-your-api-key
+
+    volumes:
+      - zhike_phoneagent_config:/root/.config/zhike-phoneagent
+      - zhike_phoneagent_logs:/app/logs
+      # USB device passthrough (Linux only, optional)
+      # - /dev/bus/usb:/dev/bus/usb
+
+    restart: unless-stopped
+
+volumes:
+  zhike_phoneagent_config:
+  zhike_phoneagent_logs:

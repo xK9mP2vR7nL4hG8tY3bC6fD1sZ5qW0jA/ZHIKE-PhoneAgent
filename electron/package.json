@@ -1,0 +1,38 @@
+{
+  "name": "zhike-phoneagent-desktop",
+  "version": "1.0.0",
+  "description": "ZHIKE-PhoneAgent Desktop",
+  "main": "main.js",
+  "homepage": "https://github.com/xK9mP2vR7nL4hG8tY3bC6fD1sZ5qW0jA/ZHIKE-PhoneAgent",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xK9mP2vR7nL4hG8tY3bC6fD1sZ5qW0jA/ZHIKE-PhoneAgent.git"
+  },
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "verify": "node verify-deps.js",
+    "prebuild": "pnpm run verify",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
+  },
+  "keywords": [
+    "zhike",
+    "android",
+    "automation",
+    "electron"
+  ],
+  "author": "ZHIKE",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "electron": "^39.8.10",
+    "electron-builder": "^26.8.1"
+  },
+  "dependencies": {
+    "electron-log": "^5.4.4",
+    "electron-updater": "^6.8.3"
+  },
+  "packageManager": "pnpm@10.33.4+sha512.1c67b3b359b2d408119ba1ed289f34b8fc3c6873412bec6fd264fbdc82489e510fcbecb9ce9d22dae7f3b76269d8441046014bdca53b9979cd7a561ad631b800"
+}
