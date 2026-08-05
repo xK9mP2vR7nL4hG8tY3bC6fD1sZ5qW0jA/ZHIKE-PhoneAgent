@@ -110,6 +110,15 @@ def download_adb(platform: str, force: bool = False) -> None:
     zip_path.unlink()
     print("  ✓ 清理临时文件")
 
+    # Linux/macOS 上 ZIP 解压后不保留可执行权限，需手动 chmod
+    if platform != "windows":
+        platform_tools_dir = output_dir / "platform-tools"
+        for binary in ("adb", "fastboot", "etc1tool", "hprof-conv",
+                       "make_f2fs", "make_f2fs_casefold", "mke2fs", "sqlite3"):
+            bin_path = platform_tools_dir / binary
+            if bin_path.exists():
+                bin_path.chmod(0o755)
+
     # 验证
     platform_tools_dir = output_dir / "platform-tools"
     adb_exe = platform_tools_dir / ("adb.exe" if platform == "windows" else "adb")
