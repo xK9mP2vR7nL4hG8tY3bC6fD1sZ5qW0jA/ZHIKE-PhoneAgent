@@ -286,7 +286,9 @@ class ElectronBuilder:
         print(f"发布模式: {publish_mode}")
 
         # 构建 Electron
-        build_cmd = ["pnpm", "run", "build", "--", "--publish", publish_mode]
+        # 不使用 `--` 分隔符：Windows 上 pnpm 会把 `--` 当作字面参数传给
+        # electron-builder，导致参数解析失败。直接传 `--publish <mode>` 即可。
+        build_cmd = ["pnpm", "run", "build", "--publish", publish_mode]
         if not run_command(build_cmd, cwd=self.electron_dir):
             if self.is_macos:
                 # macOS 上可能需要清理磁盘镜像后重试
