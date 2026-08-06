@@ -2,7 +2,7 @@ appId: com.zhike.phoneagent
 productName: ZHIKE-PhoneAgent
 copyright: Copyright © 2026 ZHIKE
 
-artifactName: ZHIKE-PhoneAgent-${version}-${arch}.${ext}
+artifactName: ZHIKE-PhoneAgent-V${version}-${arch}.${ext}
 
 # 发布到 GitHub Releases
 # 不使用 electron-builder 内置 publish（Windows 上大文件上传容易超时）。
@@ -43,7 +43,7 @@ win:
   signAndEditExecutable: false
 
 nsis:
-  artifactName: ZHIKE-PhoneAgent-Setup-${version}-${arch}.${ext}
+  artifactName: ZHIKE-PhoneAgent-Setup-V${version}-${arch}.${ext}
   oneClick: false
   allowToChangeInstallationDirectory: true
   createDesktopShortcut: true

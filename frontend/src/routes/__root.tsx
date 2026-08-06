@@ -3,7 +3,7 @@ import { Outlet, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { Github, Globe } from 'lucide-react';
+import { Globe } from 'lucide-react';
 import { useLocale, useTranslation } from '../lib/i18n-context';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { NavigationSidebar } from '../components/NavigationSidebar';
@@ -36,13 +36,18 @@ export function Footer() {
   const handleUpdateClick = async () => {
     // 桌面端：直接触发应用内自动更新（后台静默下载，下载完弹「立即重启」），
     // 不再打开浏览器跳转到 GitHub releases 页。
-    const electronAPI = (window as Window & {
-      electronAPI?: {
-        updates?: {
-          checkAndDownload: () => Promise<{ success: boolean; error?: string }>;
+    const electronAPI = (
+      window as Window & {
+        electronAPI?: {
+          updates?: {
+            checkAndDownload: () => Promise<{
+              success: boolean;
+              error?: string;
+            }>;
+          };
         };
-      };
-    }).electronAPI;
+      }
+    ).electronAPI;
     if (electronAPI?.updates?.checkAndDownload) {
       await electronAPI.updates.checkAndDownload();
       return;
@@ -58,7 +63,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm">
         <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
           <span className="flex items-center gap-1.5" title={versionTitle}>
-            v{displayedVersion}
+            V{displayedVersion}
             {__GIT_HASH__ !== 'unknown' && (
               <span className="font-mono text-xs text-slate-400 dark:text-slate-500">
                 ·{__GIT_HASH__}
@@ -98,33 +103,6 @@ export function Footer() {
             className="h-4 bg-slate-200 dark:bg-slate-700"
           />
           <ThemeToggle />
-          <Separator
-            orientation="vertical"
-            className="h-4 bg-slate-200 dark:bg-slate-700"
-          />
-          <a
-            href="https://github.com/xK9mP2vR7nL4hG8tY3bC6fD1sZ5qW0jA/ZHIKE-PhoneAgent"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-[#1d9bf0] transition-colors flex items-center gap-1"
-          >
-            <Github className="w-4 h-4" />
-            GitHub
-          </a>
-        </div>
-        <div className="text-center">
-          <a
-            href="https://github.com/xK9mP2vR7nL4hG8tY3bC6fD1sZ5qW0jA/ZHIKE-PhoneAgent"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-slate-500 dark:text-slate-400 hover:text-[#1d9bf0] transition-colors"
-          >
-            Star{' '}
-            <span className="font-semibold" role="img" aria-label="star">
-              ⭐
-            </span>{' '}
-            on GitHub
-          </a>
         </div>
       </div>
     </footer>

@@ -13,7 +13,6 @@ export const en = {
     retry: 'Retry',
   },
   footer: {
-    starOnGitHub: 'Star on GitHub',
     newVersion: 'New!',
     updateAvailable: 'Update available: v{version}',
     buildVersion: 'Build: v{version}',

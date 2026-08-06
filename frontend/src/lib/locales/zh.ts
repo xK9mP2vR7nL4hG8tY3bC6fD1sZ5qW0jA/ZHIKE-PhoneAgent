@@ -13,7 +13,6 @@ export const zh = {
     retry: '重试',
   },
   footer: {
-    starOnGitHub: '在 GitHub 上Star',
     newVersion: '新版本!',
     updateAvailable: '可用更新: v{version}',
     buildVersion: '构建版本: v{version}',

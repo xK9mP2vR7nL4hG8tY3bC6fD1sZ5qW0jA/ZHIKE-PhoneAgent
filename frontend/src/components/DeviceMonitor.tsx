@@ -347,21 +347,6 @@ export function DeviceMonitor({
                   <p className="text-xs text-amber-700 dark:text-amber-300">
                     {getReasonMessage(fallbackReason)}
                   </p>
-                  {fallbackReason === 'insecure_context' && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-7 text-xs"
-                      onClick={() =>
-                        window.open(
-                          'https://github.com/xK9mP2vR7nL4hG8tY3bC6fD1sZ5qW0jA/ZHIKE-PhoneAgent/releases',
-                          '_blank'
-                        )
-                      }
-                    >
-                      {t.deviceMonitor?.downloadElectron || '下载桌面应用'}
-                    </Button>
-                  )}
                 </div>
               </div>
             </div>

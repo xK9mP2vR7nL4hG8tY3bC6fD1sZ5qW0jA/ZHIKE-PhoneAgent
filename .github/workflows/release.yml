@@ -65,10 +65,26 @@ jobs:
         if: vars.ENABLE_PYPI_PUBLISH == 'true'
         uses: pypa/gh-action-pypi-publish@release/v1
 
+      # Release 标题品牌化为 "ZHIKE-PhoneAgent V{x.y.z}"，更新说明按 V1.0.3 品牌调整内容撰写。
+      # 后续发版如需不同的说明，请同步更新下方 heredoc 文案。
       - name: Create Release if not exists
         run: |
-          gh release view ${{ steps.version.outputs.TAG_NAME }} || \
-          gh release create ${{ steps.version.outputs.TAG_NAME }} --title "${{ steps.version.outputs.TAG_NAME }}" --notes "Release ${{ steps.version.outputs.TAG_NAME }}"
+          gh release view "${{ steps.version.outputs.TAG_NAME }}" && exit 0 || true
+          cat > release_notes.md <<'NOTES_EOF'
+          ZHIKE-PhoneAgent V${{ steps.version.outputs.VERSION }}
+
+          本次更新内容：
+
+          1. 将原有 αGUI 品牌图标统一替换为 ZHIKE 图标。
+          2. 更新软件窗口、任务栏、可执行文件及快捷方式图标。
+          3. 移除界面左下角的 GitHub 按钮。
+          4. 移除界面右下角的“Star on GitHub”按钮。
+          5. 优化底部状态栏布局和界面显示效果。
+          6. 软件版本号更新至 V${{ steps.version.outputs.VERSION }}。
+          NOTES_EOF
+          gh release create "${{ steps.version.outputs.TAG_NAME }}" \
+            --title "ZHIKE-PhoneAgent V${{ steps.version.outputs.VERSION }}" \
+            --notes-file release_notes.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
